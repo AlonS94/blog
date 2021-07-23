@@ -1,0 +1,35 @@
+$bc         : #FFFFFF;
+$textClr    : #262626;
+$clrInput   : #D9D9D9;
+$clrCheckbox: #595959;
+$bcSub      :#1890FF;
+$clrLink    : #8C8C8C;
+
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+
+.Profile {
+    display       : flex;
+    flex-direction: column;
+    width         : 384px;
+    height        : 498px;
+    padding       : 35px 32px 20px;
+
+    &__heading {
+        @include font('Roboto', 500, 20px, 28px, 0, $textClr);
+        text-align: center;
+    }
+
+    &__subBtn {
+        width     : 100%;
+        margin-top: 18px;
+    }
+}

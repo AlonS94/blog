@@ -1,0 +1,28 @@
+$clrTag :rgba(0, 0, 0, 0.5);
+
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+
+.Tag {
+    @include font('Inter', 400, 12px, 15px, 0, $clrTag);
+    border   : 1px solid $clrTag;
+    grid-area: teg;
+    padding  : 2px 5px;
+
+
+    &_margin {
+        margin-left: 1%;
+    }
+
+    &:nth-child(2) {
+        margin-left: 0;
+    }
+}

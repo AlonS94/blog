@@ -1,0 +1,62 @@
+$bc        : #FFFFFF;
+$clrHeading: #1890FF;
+$clrtxt    :rgba(0, 0, 0, 0.75);
+$cltNAme   :rgba(0, 0, 0, 0.85);
+$clrShadow : rgba(0, 0, 0, 0.15);
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+
+.Article {
+    @include font('Inter', 400, 12px, 22px, 0, $clrtxt);
+    width                : 65%;
+    background-color     : $bc;
+    padding              : 15px 15px 24px;
+    display              : grid;
+    grid-template-columns: 1fr;
+
+    box-shadow   : 0px 4px 12px 0px $clrShadow;
+    border-radius: 12px;
+
+    &__listHeight {
+        height: 15vh;
+    }
+
+    &_margin {
+        margin    : 0 auto;
+        margin-top: 3vh;
+    }
+
+    &__header {
+        display              : grid;
+        grid-template-columns: 2.5fr 1fr;
+    }
+
+    &__heading {
+        @include font('Inter', 400, 20px, 28px, 0, $clrHeading);
+    }
+
+    &__heart {
+        @include font('Inter', 400, 12px, 22px, 0, $clrtxt);
+        margin-left: 1vh;
+
+        & img {
+            vertical-align: text-bottom;
+
+        }
+    }
+
+    &__txt {
+        overflow: hidden;
+    }
+
+
+
+}

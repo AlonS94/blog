@@ -1,0 +1,32 @@
+$clrBorder: #D9D9D9;
+$clrError :#F5222D;
+
+.CreateArticle {
+    padding: 48px 32px;
+    width  : 80%;
+
+
+
+    &__submit {
+        width: 25%;
+    }
+
+    &__bodyText {
+        border       : 1px solid $clrBorder;
+        width        : 100%;
+        border-radius: 4px;
+        padding      : 8px 8px;
+        resize       : none;
+
+        &_error {
+            border-color: $clrError;
+        }
+    }
+}
+
+.marginForBodyText {
+    & p {
+        padding-top  : 12px;
+        margin-bottom: 2px;
+    }
+}

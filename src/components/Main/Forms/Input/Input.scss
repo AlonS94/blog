@@ -1,0 +1,22 @@
+$clrInput : #D9D9D9;
+$bc       : red;
+
+.Input {
+    padding-top   : 12px;
+    display       : flex;
+    flex-direction: column;
+
+    &__entryField {
+        border       : 1px solid $clrInput;
+        border-radius: 4px;
+        padding      : 8px 8px;
+    }
+
+    & span {
+        margin-bottom: 2px;
+    }
+}
+
+.error {
+    border-color: $bc;
+}

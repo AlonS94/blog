@@ -1,0 +1,26 @@
+$bc     : #FFFFFF;
+$textClr: rgba(0, 0, 0, 0.85);
+
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+.Header {
+    @include font('Inter', 400, 18px, 28px, 0, $textClr);
+    background-color: $bc;
+    display         : flex;
+    justify-content : space-between;
+    align-items     : center;
+    height          : 80px;
+    width           : 100%;
+
+    &_padding {
+        padding: 0 2.5vh;
+    }
+}

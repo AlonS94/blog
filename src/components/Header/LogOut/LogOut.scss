@@ -1,0 +1,57 @@
+$bc          : #FFFFFF;
+$textClr     : rgba(0, 0, 0, 0.75);
+$txtCltCreate: #52C41A;
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+.LogOut {
+    width          : 50%;
+    max-width      : 530px;
+    display        : flex;
+    justify-content: space-between;
+
+    &__btn {
+        @include font('Inter', 400, 18px, 28px, 0, $textClr);
+
+        &_createArtcl {
+            @include font('Inter', 400, 14px, 22px, 0, $txtCltCreate);
+            border       : 1px solid $txtCltCreate;
+            border-radius: 5px;
+            padding      : 0.5vh 1vh;
+            align-self   : center;
+        }
+
+        &_profile {
+            display        : flex;
+            justify-content: space-between;
+            width          : 30%;
+
+            & span {
+                align-self  : center;
+                margin-right: 7px;
+            }
+
+            & img {
+                width     : 49px;
+                height    : 49px;
+                align-self: center;
+            }
+        }
+
+        &_out {
+            border       : 1px solid $textClr;
+            border-radius: 5px;
+            padding      : 1vh 2vh;
+            align-self   : center;
+        }
+    }
+
+
+}

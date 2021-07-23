@@ -1,0 +1,31 @@
+$textClr: rgba(0, 0, 0, 0.85);
+$clrBtn : rgb(82, 196, 26);
+
+
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+.Unregistered {
+    width          : 23%;
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+
+    &__btn {
+        @include font('Inter', 400, 18px, 28px, 0, $textClr);
+
+        &_signUp {
+            color        : $clrBtn;
+            border       : 1px solid $clrBtn;
+            border-radius: 5px;
+            padding      : 1% 3%;
+        }
+    }
+}

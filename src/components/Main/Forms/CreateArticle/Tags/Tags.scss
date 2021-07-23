@@ -1,0 +1,66 @@
+$textClr    : #262626;
+$inputBorder: #D9D9D9;
+$btnADD     : #1890FF;
+$btnDEL     : #F5222D;
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+
+.Tags {
+    @include font('Roboto', 400, 14px, 22px, 0, $textClr);
+
+    &_margin {
+        margin: 16px 0;
+
+    }
+
+    &__label {
+        display       : flex;
+        flex-direction: column;
+    }
+
+    &__inputWrapper {
+        min-width            : 566px;
+        width                : 70%;
+        display              : grid;
+        grid-template-columns: 1fr 0.3fr 0.3fr;
+
+        &_margin {
+            margin: 5px 0;
+        }
+    }
+
+    &__input {
+        @include font('Roboto', 400, 16px, 24px, 0, $textClr);
+        border       : 1px solid $inputBorder;
+        border-radius: 4px;
+
+        padding: 8px 0 8px 12px;
+
+    }
+
+    &__btnAdd {
+        @include font('Roboto', 400, 16px, 24px, 0, $btnADD);
+        border       : 1px solid #1890FF;
+        border-radius: 4px;
+        padding      : 8px 16px;
+    }
+
+    &__btnDel {
+        @include font('Roboto', 400, 16px, 24px, 0, $btnDEL);
+        border       : 1px solid $btnDEL;
+        border-radius: 4px;
+        padding      : 8px 16px;
+
+        &_margin {
+            margin: 0 17px;
+        }
+    }
+}

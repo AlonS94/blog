@@ -1,0 +1,23 @@
+$bc       : #1890FF;
+$clrtxt   :rgba(0, 0, 0, 0.75);
+$txtActive: #FFFFFF;
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+
+.Index {
+    @include font('Inter', 400, 12px, 22px, 0, $clrtxt);
+    padding: 3px 8px;
+
+    &__active {
+        color           : $txtActive;
+        background-color: $bc;
+    }
+}

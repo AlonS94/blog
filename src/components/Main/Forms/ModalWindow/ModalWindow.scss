@@ -1,0 +1,75 @@
+$clrTxt   :#595959;
+$bcForBtn : #1890FF;
+$clrBtn   : #FFFFFF;
+$borderCLr: #D9D9D9;
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+
+
+.ModalWindow {
+    @include font('Roboto', 400, 14px, 22px, 0, $clrTxt);
+    width   : 240px;
+    height  : 140px;
+    padding : 12px 16px;
+    position: absolute;
+    top     : -15px;
+    right   : -175px;
+
+    &__message {
+        display: flex;
+
+        &_margin {
+            margin-bottom: 12px;
+        }
+
+        & span {
+            margin-left: 8px;
+            text-align : left;
+        }
+    }
+
+    &__infoIMG {
+        margin-top: 2px;
+        align-self: end;
+    }
+
+    &__infoIMG {
+        vertical-align: middle;
+    }
+
+    &__btn {
+        @include font('Roboto', 400, 14px, 22px, 0, $clrTxt);
+        border-radius: 4px;
+        padding      : 1px 8px;
+
+        &_yes {
+            background-color: $bcForBtn;
+            color           : $clrBtn;
+        }
+
+        &_non {
+            border      : 1px solid $borderCLr;
+            margin-right: 7px;
+        }
+    }
+
+    &::before {
+        content          : '';
+        height           : 12px;
+        width            : 6px;
+        background-image : url('../../../../assets/img/Main/Forms/ModalWindow/arrow.svg');
+        background-repeat: no-repeat;
+        position         : absolute;
+        top              : 20px;
+        left             : -4px
+    }
+
+}

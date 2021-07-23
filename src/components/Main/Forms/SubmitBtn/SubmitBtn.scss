@@ -1,0 +1,18 @@
+$txtClr : #FFFFFF;
+$bc     :#1890FF;
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+.SubmitBtn {
+    @include font('Roboto', 400, 16px, 24px, 0, $txtClr);
+    background-color: $bc;
+    padding         : 8px 0;
+    border-radius   : 4px;
+}

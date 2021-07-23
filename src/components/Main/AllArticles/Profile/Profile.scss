@@ -1,0 +1,65 @@
+$cltNAme :rgba(0, 0, 0, 0.85);
+$clrDate :rgba(0, 0, 0, 0.5);
+$btnDel  : #F5222D;
+$btnEdit : #52C41A;
+
+@mixin font($family, $fw, $fs, $lh, $ls, $c) {
+    font-family   : $family;
+    font-weight   : $fw;
+    font-size     : $fs;
+    line-height   : $lh;
+    letter-spacing: $ls;
+    color         : $c;
+}
+
+
+.profile {
+    display        : flex;
+    justify-content: flex-end;
+
+    & div {
+        margin-right: 12px;
+    }
+
+    & img {
+        align-self: end;
+        width     : 46px;
+        height    : 46px
+    }
+
+    &_name {
+        @include font('Inter', 400, 18px, 28px, 0, $cltNAme);
+    }
+
+    &_date {
+        @include font('Inter', 400, 12px, 22px, 0, $clrDate);
+    }
+
+    &__wrapperForBtn {
+        display          : flex;
+        justify-content  : flex-end;
+        position         : relative;
+        text-align       : end;
+        margin-top       : 24px;
+        grid-column-start: 2;
+        margin-bottom    : 5px;
+    }
+
+    &__btn {
+        @include font('Inter', 400, 14px, 22px, 0, $btnDel);
+        padding      : 6px 17px;
+        border       : 1px solid;
+        border-radius: 5px;
+
+        &_edit {
+            margin-left : 10px;
+            color       : $btnEdit;
+            border-color: $btnEdit;
+
+        }
+
+        &_del {
+            border-color: $btnDel;
+        }
+    }
+}
