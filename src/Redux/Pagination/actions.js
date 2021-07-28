@@ -1,4 +1,4 @@
-export const getArticlesCount = (articlesCount) => ({ type: 'articlesCount', articlesCount });
+export const getArticlesCount = (articlesCount, offset) => ({ type: 'articlesCount', articlesCount, offset });
 export const getNumbersForPagination = (numbersForPagination) => ({
   type: 'numbersForPagination',
   numbersForPagination,

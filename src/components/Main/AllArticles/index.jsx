@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import newWrapper from '../../../assets/newWrapper';
-import actionsDispatch from '../../../Redux/actions';
+import actionsDispatch from '../../../redux/actions';
 import Article from './Article';
 import LoadIndicator from './LoadingIndicator';
 import Pagination from './Pagination';

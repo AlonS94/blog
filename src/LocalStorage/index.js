@@ -3,5 +3,5 @@ export default class LocalStorage {
     localStorage.setItem('user', profile);
   };
 
-  checkProfile = (profile) => localStorage.getItem(profile);
+  getProfile = (profile) => localStorage.getItem(profile);
 }

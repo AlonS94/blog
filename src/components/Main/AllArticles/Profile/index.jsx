@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import './Profile.scss';
 import profil from '../../../../assets/img/Main/AllArticles/Profile/profile.png';
 import ModalWindow from '../../Forms/ModalWindow';
-import DataAPI from '../../../../DataAPI';
-import actionsDispatch from '../../../../Redux/actions';
+import DataAPI from '../../../../dataAPI';
+import actionsDispatch from '../../../../redux/actions';
 
-const Profile = ({ author, createdAt, profileUSer, history, profile, article, getArticles }) => {
+const Profile = ({ author, createdAt, profileUSer, history, article, getArticles }) => {
   const { username, image } = author;
-  const token = profile ? profile.token : null;
   const { slug } = article;
   const [windowVisible, setWindowVisible] = useState(false);
 
@@ -41,12 +40,12 @@ const Profile = ({ author, createdAt, profileUSer, history, profile, article, ge
   /* зОчем библиотеки, если можно написать плохой код? */
 
   const goStartPAge = async () => {
-    getArticles(token, 0);
+    getArticles(0);
     history.push(`/articles`);
   };
 
   const onClicYes = async () => {
-    await API.onDeleteArticle(token, slug);
+    await API.onDeleteArticle(slug);
     await goStartPAge();
   };
 
@@ -91,12 +90,6 @@ const Profile = ({ author, createdAt, profileUSer, history, profile, article, ge
 };
 
 Profile.propTypes = {
-  profile: PropTypes.oneOfType([
-    PropTypes.shape({
-      token: PropTypes.string,
-    }),
-    PropTypes.bool,
-  ]),
   author: PropTypes.shape({
     bio: PropTypes.string,
     following: PropTypes.bool,
@@ -118,7 +111,6 @@ Profile.propTypes = {
 };
 
 Profile.defaultProps = {
-  profile: {},
   profileUSer: '',
   author: {},
   createdAt: '',

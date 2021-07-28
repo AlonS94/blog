@@ -4,32 +4,54 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import actionsDispatch from '../../../../Redux/actions';
+import LoadIndicator from '../LoadingIndicator';
+import actionsDispatch from '../../../../redux/actions';
 import heart from '../../../../assets/img/Main/AllArticles/Article/heart.png';
 import activHeart from '../../../../assets/img/Main/AllArticles/Article/activHeart.png';
 import Profile from '../Profile';
 import Tag from '../Tag';
 import './Article.scss';
 
-const Article = ({ info, profileUSer, history, className, profile, getOnFavoriteArticle, onUnfavoriteArticle }) => {
+const Article = ({
+  info,
+  profileUSer,
+  history,
+  className,
+  profile,
+  getOnFavoriteArticle,
+  onUnfavoriteArticle,
+  loading,
+  articles,
+  getArticlesAfterLike,
+}) => {
   const { title, slug, body, createdAt, tagList, author, favorited, favoritesCount } = info;
 
-  const token = profile ? profile.token : null;
+  const getNewArticles = () => {
+    const idx = articles.findIndex((article) => article.slug === slug);
+    let newArticle = articles[idx];
+    const favoritesCounts = newArticle.favorited ? newArticle.favoritesCount - 1 : newArticle.favoritesCount + 1;
+    newArticle = { ...newArticle, favorited: !favorited, favoritesCount: favoritesCounts };
+    const newArticles = [...articles.slice(0, idx), newArticle, ...articles.slice(idx + 1)];
+    getArticlesAfterLike(newArticles);
+  };
 
   const onLike = async () => {
-    getOnFavoriteArticle(token, slug);
+    getOnFavoriteArticle(slug);
   };
 
   const unLike = async () => {
-    onUnfavoriteArticle(token, slug);
+    onUnfavoriteArticle(slug);
   };
 
   const changeLike = () => {
+    getNewArticles();
     if (favorited) unLike();
     else onLike();
   };
 
-  return (
+  return loading ? (
+    <LoadIndicator />
+  ) : (
     <article className={`Article Article_margin + ${className}`}>
       <header className="Article__header">
         <div>
@@ -76,12 +98,7 @@ Article.propTypes = {
     title: PropTypes.string,
     updatedAt: PropTypes.string,
   }),
-  profile: PropTypes.oneOfType([
-    PropTypes.shape({
-      token: PropTypes.string,
-    }),
-    PropTypes.bool,
-  ]),
+  profile: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.bool]),
   className: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -89,9 +106,13 @@ Article.propTypes = {
   profileUSer: PropTypes.string,
   getOnFavoriteArticle: PropTypes.func,
   onUnfavoriteArticle: PropTypes.func,
+  loading: PropTypes.bool,
+  articles: PropTypes.arrayOf(PropTypes.object),
+  getArticlesAfterLike: PropTypes.func,
 };
 
 Article.defaultProps = {
+  getArticlesAfterLike: () => {},
   info: {},
   profile: {},
   className: '',
@@ -99,10 +120,14 @@ Article.defaultProps = {
   profileUSer: '',
   getOnFavoriteArticle: () => {},
   onUnfavoriteArticle: () => {},
+  loading: false,
+  articles: {},
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
+  loading: state.loading,
+  articles: state.articles,
 });
 
 export default connect(mapStateToProps, actionsDispatch)(withRouter(Article));

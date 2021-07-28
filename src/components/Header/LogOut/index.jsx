@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import newWrapper from '../../../assets/newWrapper';
 import './LogOut.scss';
-import actionsDispatch from '../../../Redux/actions';
+import actionsDispatch from '../../../redux/actions';
 import logo from '../../../assets/img/Header/logo.png';
 
 const LogOut = ({ profile, onLogOut }) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import newWrapper from '../../../../assets/newWrapper';
-import actionsDispatch from '../../../../Redux/actions';
+import actionsDispatch from '../../../../redux/actions';
 import IndexPagination from './IndexPagination';
 import './Pagination.scss';
 import leftlight from '../../../../assets/img/Main/AllArticles/Pagination/left light.svg';
@@ -10,14 +10,12 @@ import leftDark from '../../../../assets/img/Main/AllArticles/Pagination/left da
 import rightDark from '../../../../assets/img/Main/AllArticles/Pagination/right  dark.svg';
 import rightLight from '../../../../assets/img/Main/AllArticles/Pagination/right light.svg';
 
-const Pagination = ({ pagination, getArticles, changeActiveButton, profile }) => {
-  const { articlesCount, numbersForPagination, activeButton } = pagination;
+const Pagination = ({ pagination, getArticles, changeActiveButton }) => {
+  const { articlesCount, numbersForPagination, activeButton, offset } = pagination;
 
-  let token = false;
-  if (profile) token = profile.token;
-  const onGetArticles = (offset) => {
-    getArticles(token, offset);
-    changeActiveButton(offset);
+  const onGetArticles = (event) => {
+    getArticles(event * offset);
+    changeActiveButton(event);
   };
 
   let AllPagination = null;
@@ -57,22 +55,16 @@ const Pagination = ({ pagination, getArticles, changeActiveButton, profile }) =>
 
 Pagination.propTypes = {
   getArticles: PropTypes.func,
-  profile: PropTypes.oneOfType([
-    PropTypes.shape({
-      token: PropTypes.string,
-    }),
-    PropTypes.bool,
-  ]),
   changeActiveButton: PropTypes.func,
   pagination: PropTypes.shape({
     articlesCount: PropTypes.number,
     numbersForPagination: PropTypes.arrayOf(PropTypes.number),
     activeButton: PropTypes.number,
+    offset: PropTypes.number,
   }),
 };
 
 Pagination.defaultProps = {
-  profile: {},
   getArticles: () => {},
   changeActiveButton: () => {},
   pagination: {},

@@ -1,5 +1,6 @@
 const defaultstate = {
   articlesCount: 0,
+  offset: 0,
   numbersForPagination: [],
   activeButton: 1,
 };
@@ -7,7 +8,7 @@ const defaultstate = {
 const paginationReducer = (state = defaultstate, action) => {
   switch (action.type) {
     case 'articlesCount':
-      return { ...state, articlesCount: action.articlesCount };
+      return { ...state, articlesCount: action.articlesCount, offset: action.offset };
 
     case 'numbersForPagination':
       return { ...state, numbersForPagination: action.numbersForPagination };

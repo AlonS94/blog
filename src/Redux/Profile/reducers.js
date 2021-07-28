@@ -1,8 +1,8 @@
-import LocalStorage from '../../LocalStorage';
+import LocalStorage from '../../localStorage';
 
 const ls = new LocalStorage();
 
-const profile = JSON.parse(ls.checkProfile('user'));
+const profile = JSON.parse(ls.getProfile('user'));
 
 const ProfileReducer = (state = profile, action) => {
   switch (action.type) {

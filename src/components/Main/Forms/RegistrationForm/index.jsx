@@ -8,7 +8,7 @@ import Input from '../Input';
 import SubmitBtn from '../SubmitBtn';
 import formsWrapper from '../../../../assets/formsWrapper';
 import ErrorMessage from '../ErrorMessage';
-import actionsDispatch from '../../../../Redux/actions';
+import actionsDispatch from '../../../../redux/actions';
 
 const RegistrationForm = ({ registration, profile, getArticles }) => {
   const {
@@ -19,15 +19,16 @@ const RegistrationForm = ({ registration, profile, getArticles }) => {
   } = useForm({ mode: 'onTouched' });
 
   const [error, setError] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   function submitForm(event) {
     const body = { username: event.username, email: event.email, password: event.password };
     setError(false);
-    registration(body, setError);
+    registration(body, setError, setDisabled);
   }
 
   if (profile) {
-    getArticles(profile.token);
+    getArticles();
     return <Redirect to="/" />;
   }
 
@@ -89,7 +90,7 @@ const RegistrationForm = ({ registration, profile, getArticles }) => {
           <p>I agree to the processing of my personal information</p>
           {errors.personalData && <ErrorMessage type={errors.personalData?.type} />}
         </label>
-        <SubmitBtn name="Create" />
+        <SubmitBtn name="Create" disabled={disabled} />
       </form>
       <p className="RegistrationForm__link">
         Already have an account?
@@ -106,9 +107,16 @@ const RegistrationForm = ({ registration, profile, getArticles }) => {
 RegistrationForm.propTypes = {
   registration: PropTypes.func,
   getArticles: PropTypes.func,
-  profile: PropTypes.shape({
-    token: PropTypes.string,
-  }),
+  profile: PropTypes.oneOfType([
+    PropTypes.shape({
+      username: PropTypes.string,
+      email: PropTypes.string,
+      image: PropTypes.string,
+      password: PropTypes.string,
+      bio: PropTypes.string,
+    }),
+    PropTypes.bool,
+  ]),
 };
 
 RegistrationForm.defaultProps = {

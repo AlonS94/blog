@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './Profile.scss';
-import actionsDispatch from '../../../../Redux/actions';
+import actionsDispatch from '../../../../redux/actions';
 import formsWrapper from '../../../../assets/formsWrapper';
 import Input from '../Input';
 import SubmitBtn from '../SubmitBtn';
 import ErrorMessage from '../ErrorMessage';
 
 const Profile = ({ profile, onUpdateUSer }) => {
-  const { username, email, image, token } = profile;
+  const { username, email, image } = profile;
 
   const {
     register,
@@ -20,6 +19,7 @@ const Profile = ({ profile, onUpdateUSer }) => {
   } = useForm({ mode: 'onTouched', defaultValues: { username, email, password: '', image: image || '' } });
 
   const [error, setError] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const getNewObj = (event, obj) => {
     const newObj = {};
@@ -35,10 +35,8 @@ const Profile = ({ profile, onUpdateUSer }) => {
   function submitForm(event, obj) {
     setError(false);
     const newObj = getNewObj(event, obj);
-    onUpdateUSer(token, newObj, setError);
+    onUpdateUSer(newObj, setError, setDisabled);
   }
-
-  if (!profile) return <Redirect to="/sign-in" />;
 
   return (
     <>
@@ -100,21 +98,23 @@ const Profile = ({ profile, onUpdateUSer }) => {
         />
         {error.image && <ErrorMessage message={error.image} />}
         {errors.image && <ErrorMessage type={errors.image?.type} />}
-        <SubmitBtn name="Save" className="Profile__subBtn" />
+        <SubmitBtn name="Save" className="Profile__subBtn" disabled={disabled} />
       </form>
     </>
   );
 };
 
 Profile.propTypes = {
-  profile: PropTypes.shape({
-    username: PropTypes.string,
-    email: PropTypes.string,
-    image: PropTypes.string,
-    token: PropTypes.string,
-    password: PropTypes.string,
-    bio: PropTypes.string,
-  }),
+  profile: PropTypes.oneOfType([
+    PropTypes.shape({
+      username: PropTypes.string,
+      email: PropTypes.string,
+      image: PropTypes.string,
+      password: PropTypes.string,
+      bio: PropTypes.string,
+    }),
+    PropTypes.bool,
+  ]),
   onUpdateUSer: PropTypes.func,
 };
 

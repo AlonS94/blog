@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
-import actionsDispatch from '../../../../Redux/actions';
-import DataAPI from '../../../../DataAPI';
+import actionsDispatch from '../../../../redux/actions';
+import DataAPI from '../../../../dataAPI';
 import formsWrapper from '../../../../assets/formsWrapper';
 import Input from '../Input';
 import SubmitBtn from '../SubmitBtn';
@@ -12,9 +12,8 @@ import Tags from './Tags';
 import './CreateArticle.scss';
 import ErrorMessage from '../ErrorMessage';
 
-const CreateArticle = ({ profile, heading, article, edit, getArticle, history }) => {
+const CreateArticle = ({ getArticles, heading, article, edit, getArticle, history }) => {
   const [tags, setTags] = useState([]);
-  const [pushSlug, setPushSlug] = useState('');
 
   const { title, description, body, tagList, slug } = article;
 
@@ -23,7 +22,6 @@ const CreateArticle = ({ profile, heading, article, edit, getArticle, history })
   }, [edit, tagList]);
 
   const API = new DataAPI();
-  const { token } = profile;
   const {
     handleSubmit,
     register,
@@ -47,26 +45,27 @@ const CreateArticle = ({ profile, heading, article, edit, getArticle, history })
     });
   };
 
-  const createArticle = (Newbody) => {
-    API.onCreateArticle(Newbody, token).then((elem) => {
-      setPushSlug(elem.article.slug);
-      setTags([]);
+  const createArticle = async (Newbody) => {
+    await API.onCreateArticle(Newbody).then((elem) => {
+      getArticles();
+      getArticle(elem.article.slug);
+      history.push(`/articles/${elem.article.slug}`);
     });
   };
 
   const updateArticle = async (Newbody) => {
-    await API.onUpdateArticle(Newbody, token, slug).then((elem) => {
+    await API.onUpdateArticle(Newbody, slug).then((elem) => {
       setTags(elem.article.tagList);
-      setPushSlug(elem.article.slug);
     });
-    getArticle(slug, token);
+    getArticle(slug);
   };
 
   const submitForm = (event) => {
     const Newbody = { ...event, tagList: tags };
-    if (edit) updateArticle(Newbody);
-    else createArticle(Newbody);
-    history.push(`/articles/${pushSlug}`);
+    if (edit) {
+      updateArticle(Newbody);
+      history.push(`/articles/${slug}`);
+    } else createArticle(Newbody);
   };
 
   return (
@@ -116,9 +115,7 @@ const CreateArticle = ({ profile, heading, article, edit, getArticle, history })
 };
 
 CreateArticle.propTypes = {
-  profile: PropTypes.shape({
-    token: PropTypes.string,
-  }),
+  getArticles: PropTypes.func,
   heading: PropTypes.string,
   edit: PropTypes.bool,
   getArticle: PropTypes.func,
@@ -135,7 +132,7 @@ CreateArticle.propTypes = {
 };
 
 CreateArticle.defaultProps = {
-  profile: {},
+  getArticles: () => {},
   heading: '',
   edit: false,
   getArticle: () => {},

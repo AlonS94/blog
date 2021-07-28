@@ -1,3 +1,13 @@
+import store from '../redux';
+
+const { profile } = store.getState();
+const token = profile ? profile.token : null;
+
+const headers = {
+  'Content-Type': 'application/json;charset=utf-8',
+  Authorization: `Token ${token}`,
+};
+
 export default class DataAPI {
   url = 'https://conduit.productionready.io/api';
 
@@ -15,24 +25,18 @@ export default class DataAPI {
     return result;
   };
 
-  getListArticles = async (offset = 0, token = false) => {
+  getListArticles = async (offset = 0) => {
     if (!token) return this.bodyForRequest(`/articles/?offset=${offset}`);
     const respons = await this.bodyForRequest(`/articles/?offset=${offset}`, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
+      headers,
     });
     return respons;
   };
 
-  getArticle = async (slug, token = false) => {
+  getArticle = async (slug) => {
     if (!token) return this.bodyForRequest(`/articles/${slug}`);
     const respons = await this.bodyForRequest(`/articles/${slug}`, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
+      headers,
     });
     return respons;
   };
@@ -68,13 +72,10 @@ export default class DataAPI {
 
   getCurrentUser = () => this.bodyForRequest(`/user`);
 
-  onUpdateUSer = async (token, body) => {
+  onUpdateUSer = async (body) => {
     const respons = await this.bodyForRequest(`/user`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
+      headers,
 
       body: JSON.stringify({
         user: body,
@@ -83,13 +84,10 @@ export default class DataAPI {
     return respons;
   };
 
-  onCreateArticle = async (body, token) => {
+  onCreateArticle = async (body) => {
     const respons = await this.bodyForRequest(`/articles`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
+      headers,
       body: JSON.stringify({
         article: body,
       }),
@@ -97,13 +95,10 @@ export default class DataAPI {
     return respons;
   };
 
-  onUpdateArticle = async (body, token, slug) => {
+  onUpdateArticle = async (body, slug) => {
     const respons = await this.bodyForRequest(`/articles/${slug}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
+      headers,
       body: JSON.stringify({
         article: body,
       }),
@@ -111,34 +106,25 @@ export default class DataAPI {
     return respons;
   };
 
-  onDeleteArticle = async (token, slug) => {
+  onDeleteArticle = async (slug) => {
     this.bodyForRequest(`/articles/${slug}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
+      headers,
     });
   };
 
-  onFavoriteArticle = async (token, slug) => {
+  onFavoriteArticle = async (slug) => {
     const respons = await this.bodyForRequest(`/articles/${slug}/favorite`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
+      headers,
     });
     return respons;
   };
 
-  onUnfavoriteArticle = async (token, slug) => {
+  onUnfavoriteArticle = async (slug) => {
     const respons = await this.bodyForRequest(`/articles/${slug}/favorite`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
+      headers,
     });
     return respons;
   };

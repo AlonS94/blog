@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './IndexPagination.scss';
-import actionsDispatch from '../../../../../Redux/actions';
+import actionsDispatch from '../../../../../redux/actions';
 
 const IndexPagination = ({ index, pagination, onGetArticles }) => {
   const { articlesCount, activeButton } = pagination;
